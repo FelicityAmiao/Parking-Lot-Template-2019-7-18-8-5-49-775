@@ -25,4 +25,8 @@ public class ParkingLotService {
     public List<ParkingLot> getPageParkingLots(int page, int pageSize) {
         return parkingLotRepository.findAll(new PageRequest(page, pageSize)).getContent();
     }
+
+    public ParkingLot getParkingLotByNameId(String nameId) {
+        return parkingLotRepository.findById(nameId).orElse(null);
+    }
 }

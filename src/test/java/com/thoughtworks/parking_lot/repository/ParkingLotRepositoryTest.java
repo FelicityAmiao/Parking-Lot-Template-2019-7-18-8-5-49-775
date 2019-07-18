@@ -10,8 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -85,6 +84,25 @@ public class ParkingLotRepositoryTest {
 
         Page<ParkingLot> all = parkingLotRepository.findAll(new PageRequest(0, 15));
         assertEquals(false, all.getContent().contains(parkingLot));
+    }
+
+
+    @Test
+    public void should_parking_lot_when_call_findById_given_name_id() {
+        for (int i = 0; i < 15; i++) {
+            ParkingLot parkingLot = new ParkingLot();
+            parkingLot.setName("Jerry Parking Lot" + i);
+            parkingLot.setCapacity(20);
+            parkingLot.setPosition("1");
+            parkingLotRepository.save(parkingLot);
+        }
+        ParkingLot parkingLot = new ParkingLot();
+        parkingLot.setName("Jerry Parking Lot 16");
+        parkingLot.setCapacity(300);
+        parkingLot.setPosition("1");
+        parkingLotRepository.save(parkingLot);
+
+        assertEquals(parkingLot.getCapacity(), parkingLotRepository.findById("Jerry Parking Lot 16").orElse(null).getCapacity());
     }
 
 
