@@ -54,5 +54,17 @@ public class ParkingLotRepositoryTest {
         assertEquals(1, parkingLotRepository.findAll().size());
     }
 
+    @Test
+    public void should_delete_parking_lot_when_call_delete_given_parking_lot_id() {
+        ParkingLot parkingLot = new ParkingLot();
+        parkingLot.setName("Jerry Parking Lot");
+        parkingLot.setCapacity(20);
+        parkingLot.setPosition("1");
+        parkingLotRepository.save(parkingLot);
+
+        parkingLotRepository.deleteById(parkingLot.getName());
+        assertEquals(0, parkingLotRepository.findAll().size());
+    }
+
 
 }
