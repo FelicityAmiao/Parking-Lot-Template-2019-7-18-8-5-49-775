@@ -1,7 +1,10 @@
 package com.thoughtworks.parking_lot.controller;
 
+import com.thoughtworks.parking_lot.dto.ParkOrderDto;
+import com.thoughtworks.parking_lot.model.ParkOrder;
 import com.thoughtworks.parking_lot.model.ParkingLot;
 import com.thoughtworks.parking_lot.service.ParkingLotService;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,5 +40,10 @@ public class ParkingLotController {
     @PutMapping
     public ParkingLot modifyParkingLot(@RequestBody ParkingLot parkingLot) {
         return parkingLotService.update(parkingLot);
+    }
+
+    @PostMapping(path = "/{nameId}/park-orders", produces = "application/json")
+    public ParkOrderDto addParkOrder(@PathVariable String nameId, @RequestParam String carId) {
+        return parkingLotService.addParkOrder(nameId, carId);
     }
 }
