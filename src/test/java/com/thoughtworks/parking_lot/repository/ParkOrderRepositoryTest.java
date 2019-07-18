@@ -9,6 +9,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -50,5 +51,30 @@ public class ParkOrderRepositoryTest {
         }
         assertSame(order, parkOrder);
         assertEquals(1, save.getParkOrders().size());
+    }
+
+    @Test
+    public void should_return_modify_park_order_call_findAllByParkingLotNameAndCarID_given_parklot_name_and_car_ID() throws Exception {
+
+        ParkingLot parkingLot1 = new ParkingLot();
+        parkingLot1.setName("No.1 Park");
+        parkingLot1.setCapacity(22);
+        parkingLotRepository.save(parkingLot1);
+
+        ParkOrder order = new ParkOrder();
+        order.setParkingLotName("No.1 Park");
+        order.setCarID("YA223DS");
+        order.setCreateTime(new Date());
+        parkingLot1.getParkOrders().add(order);
+        parkingLotRepository.save(parkingLot1);
+        parkOrderRepository.save(order);
+
+        order.setOrderStatus(false);
+        order.setEndTime(new Date());
+        parkOrderRepository.save(order);
+
+        ParkOrder parkOrder = parkOrderRepository.findAllByParkingLotNameAndCarID("No.1 Park", "YA223DS").get(1);
+
+        assertEquals(false, parkOrder.isOrderStatus());
     }
 }

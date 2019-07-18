@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ParkingLotService {
@@ -65,5 +66,20 @@ public class ParkingLotService {
         parkOrder.setCarID(carId);
         parkOrder.setCreateTime(new Date());
         return parkOrder;
+    }
+
+    public ParkOrder updateParkOrder(String nameId, String carId) {
+        ParkingLot parkingLot = parkingLotRepository.findById(nameId).orElse(null);
+        ParkOrder allByParkingLotNameAndCarID = parkOrderRepository.findAllByParkingLotNameAndCarID(nameId, carId).get(0);
+        if(parkingLot == null || allByParkingLotNameAndCarID == null || !allByParkingLotNameAndCarID.isOrderStatus()) {
+            return null;
+        }
+        allByParkingLotNameAndCarID.setEndTime(new Date());
+        allByParkingLotNameAndCarID.setOrderStatus(false);
+        parkOrderRepository.save(allByParkingLotNameAndCarID);
+        ParkOrder parkOrder = parkingLot.getParkOrders().stream().filter(item -> item.getId() == allByParkingLotNameAndCarID.getId()).collect(Collectors.toList()).get(0);
+        parkingLot.getParkOrders().remove(parkOrder);
+        parkingLot.getParkOrders().add(allByParkingLotNameAndCarID);
+        return allByParkingLotNameAndCarID;
     }
 }

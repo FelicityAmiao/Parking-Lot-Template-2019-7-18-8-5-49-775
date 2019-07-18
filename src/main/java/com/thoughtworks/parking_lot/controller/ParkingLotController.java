@@ -46,4 +46,9 @@ public class ParkingLotController {
     public ParkOrderDto addParkOrder(@PathVariable String nameId, @RequestParam String carId) {
         return parkingLotService.addParkOrder(nameId, carId);
     }
+
+    @PutMapping("/{nameId}/park-orders")
+    public ParkOrder updateOrder(@PathVariable String nameId, @RequestParam String carId) {
+        return parkingLotService.updateParkOrder(nameId, carId);
+    }
 }
