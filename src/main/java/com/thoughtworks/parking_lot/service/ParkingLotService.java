@@ -15,6 +15,9 @@ import java.util.List;
 @Service
 public class ParkingLotService {
 
+    public static final String PARK_LOT_IS_NOT_FOUND = "The park is not find!";
+    public static final String PARK_IS_FULL = "The park lot is full, please go to other way";
+
     @Autowired
     private ParkingLotRepository parkingLotRepository;
 
@@ -44,10 +47,10 @@ public class ParkingLotService {
     public ParkOrderDto addParkOrder(String nameId, String carId) {
         ParkingLot parkingLot = parkingLotRepository.findById(nameId).orElse(null);
         if (parkingLot == null) {
-            return new ParkOrderDto(null, "The park is not find!");
+            return new ParkOrderDto(null, PARK_LOT_IS_NOT_FOUND);
         }
         if (parkingLot.getParkOrders().size() >= parkingLot.getCapacity()) {
-            return new ParkOrderDto(null, "The park lot is full, please go to other way");
+            return new ParkOrderDto(null, PARK_IS_FULL);
         }
         ParkOrder parkOrder = createParkOrder(nameId, carId);
         parkingLot.getParkOrders().add(parkOrder);
