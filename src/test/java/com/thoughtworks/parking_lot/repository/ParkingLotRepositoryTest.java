@@ -6,6 +6,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -64,6 +66,25 @@ public class ParkingLotRepositoryTest {
 
         parkingLotRepository.deleteById(parkingLot.getName());
         assertEquals(0, parkingLotRepository.findAll().size());
+    }
+
+    @Test
+    public void should_list_parking_lots_when_call_findAll_page_pageSize() {
+        for (int i = 0; i < 15; i++) {
+            ParkingLot parkingLot = new ParkingLot();
+            parkingLot.setName("Jerry Parking Lot" + i);
+            parkingLot.setCapacity(20);
+            parkingLot.setPosition("1");
+            parkingLotRepository.save(parkingLot);
+        }
+        ParkingLot parkingLot = new ParkingLot();
+        parkingLot.setName("Jerry Parking Lot 16");
+        parkingLot.setCapacity(20);
+        parkingLot.setPosition("1");
+        parkingLotRepository.save(parkingLot);
+
+        Page<ParkingLot> all = parkingLotRepository.findAll(new PageRequest(0, 15));
+        assertEquals(false, all.getContent().contains(parkingLot));
     }
 
 
