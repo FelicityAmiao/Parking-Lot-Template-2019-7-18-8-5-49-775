@@ -1,6 +1,15 @@
+
+buildscript {
+    dependencies {
+        classpath 'com.h2database:h2:1.4.197'
+    }
+}
+
 plugins {
     id 'org.springframework.boot' version '2.1.6.RELEASE'
     id 'java'
+    id 'idea'
+    id "org.flywaydb.flyway" version "5.2.4"
 }
 
 apply plugin: 'io.spring.dependency-management'
@@ -13,7 +22,17 @@ repositories {
     mavenCentral()
 }
 
+flyway {
+    url = 'jdbc:h2:file:./target/foobar'
+    user = 'sa'
+}
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    compile 'com.h2database:h2'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.4.2'
+    testCompile group: 'com.h2database', name: 'h2', version: '1.4.197'
+    compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+    testCompile 'org.assertj:assertj-core:3.10.0'
 }
