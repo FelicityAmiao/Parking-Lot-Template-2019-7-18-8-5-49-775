@@ -105,5 +105,22 @@ public class ParkingLotRepositoryTest {
         assertEquals(parkingLot.getCapacity(), parkingLotRepository.findById("Jerry Parking Lot 16").orElse(null).getCapacity());
     }
 
+    @Test
+    public void should_parking_lot_when_call_save_given_modified_parking_lot() {
+        ParkingLot parkingLot = new ParkingLot();
+        parkingLot.setName("Jerry Parking Lot 16");
+        parkingLot.setCapacity(300);
+        parkingLot.setPosition("1");
+        parkingLotRepository.save(parkingLot);
+
+        ParkingLot parkingLot1 = new ParkingLot();
+        parkingLot1.setName("Jerry Parking Lot 16");
+        parkingLot1.setCapacity(22);
+        parkingLot1.setPosition("1");
+        ParkingLot save = parkingLotRepository.save(parkingLot1);
+
+        assertEquals(parkingLot1.getCapacity(), save.getCapacity());
+    }
+
 
 }

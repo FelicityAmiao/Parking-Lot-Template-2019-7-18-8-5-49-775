@@ -29,4 +29,8 @@ public class ParkingLotService {
     public ParkingLot getParkingLotByNameId(String nameId) {
         return parkingLotRepository.findById(nameId).orElse(null);
     }
+
+    public ParkingLot update(ParkingLot parkingLot) {
+        return parkingLotRepository.save(parkingLot);
+    }
 }
