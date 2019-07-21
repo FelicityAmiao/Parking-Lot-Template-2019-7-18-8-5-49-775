@@ -63,23 +63,23 @@ public class ParkingLotService {
     private ParkOrder createParkOrder(String nameId, String carId) {
         ParkOrder parkOrder = new ParkOrder();
         parkOrder.setParkingLotName(nameId);
-        parkOrder.setCarID(carId);
+        parkOrder.setcarId(carId);
         parkOrder.setCreateTime(new Date());
         return parkOrder;
     }
 
     public ParkOrder updateParkOrder(String nameId, String carId) {
         ParkingLot parkingLot = parkingLotRepository.findById(nameId).orElse(null);
-        ParkOrder allByParkingLotNameAndCarID = parkOrderRepository.findAllByParkingLotNameAndCarID(nameId, carId).get(0);
-        if(parkingLot == null || allByParkingLotNameAndCarID == null || !allByParkingLotNameAndCarID.isOrderStatus()) {
+        ParkOrder allByParkingLotNameAndcarId = parkOrderRepository.findAllByParkingLotNameAndCarId(nameId, carId).get(0);
+        if(parkingLot == null || allByParkingLotNameAndcarId == null || !allByParkingLotNameAndcarId.isOrderStatus()) {
             return null;
         }
-        allByParkingLotNameAndCarID.setEndTime(new Date());
-        allByParkingLotNameAndCarID.setOrderStatus(false);
-        parkOrderRepository.save(allByParkingLotNameAndCarID);
-        ParkOrder parkOrder = parkingLot.getParkOrders().stream().filter(item -> item.getId() == allByParkingLotNameAndCarID.getId()).collect(Collectors.toList()).get(0);
+        allByParkingLotNameAndcarId.setEndTime(new Date());
+        allByParkingLotNameAndcarId.setOrderStatus(false);
+        parkOrderRepository.save(allByParkingLotNameAndcarId);
+        ParkOrder parkOrder = parkingLot.getParkOrders().stream().filter(item -> item.getId() == allByParkingLotNameAndcarId.getId()).collect(Collectors.toList()).get(0);
         parkingLot.getParkOrders().remove(parkOrder);
-        parkingLot.getParkOrders().add(allByParkingLotNameAndCarID);
-        return allByParkingLotNameAndCarID;
+        parkingLot.getParkOrders().add(allByParkingLotNameAndcarId);
+        return allByParkingLotNameAndcarId;
     }
 }

@@ -33,7 +33,7 @@ public class ParkOrderRepositoryTest {
 
         ParkOrder order = new ParkOrder();
         order.setParkingLotName("No.1 Park");
-        order.setCarID("YA223DS");
+        order.setcarId("YA223DS");
         order.setCreateTime(new Date());
         ParkingLot parkingLot = parkingLotRepository.findById("No.1 Park").orElse(null);
         ParkOrder parkOrder = null;
@@ -54,7 +54,7 @@ public class ParkOrderRepositoryTest {
     }
 
     @Test
-    public void should_return_modify_park_order_call_findAllByParkingLotNameAndCarID_given_parklot_name_and_car_ID() throws Exception {
+    public void should_return_modify_park_order_call_findAllByParkingLotNameAndcarId_given_parklot_name_and_car_ID() throws Exception {
 
         ParkingLot parkingLot1 = new ParkingLot();
         parkingLot1.setName("No.1 Park");
@@ -63,7 +63,7 @@ public class ParkOrderRepositoryTest {
 
         ParkOrder order = new ParkOrder();
         order.setParkingLotName("No.1 Park");
-        order.setCarID("YA223DS");
+        order.setcarId("YA223DS");
         order.setCreateTime(new Date());
         parkingLot1.getParkOrders().add(order);
         parkingLotRepository.save(parkingLot1);
@@ -73,7 +73,7 @@ public class ParkOrderRepositoryTest {
         order.setEndTime(new Date());
         parkOrderRepository.save(order);
 
-        ParkOrder parkOrder = parkOrderRepository.findAllByParkingLotNameAndCarID("No.1 Park", "YA223DS").get(1);
+        ParkOrder parkOrder = parkOrderRepository.findAllByParkingLotNameAndCarId("No.1 Park", "YA223DS").get(1);
 
         assertEquals(false, parkOrder.isOrderStatus());
     }

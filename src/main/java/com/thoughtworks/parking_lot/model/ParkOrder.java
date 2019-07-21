@@ -4,12 +4,13 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@Table(name = "park_order")
 public class ParkOrder {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String parkingLotName;
-    private String carID;
+    private String carId;
     private Date createTime;
     private Date endTime;
     private boolean orderStatus = true;
@@ -30,12 +31,12 @@ public class ParkOrder {
         this.parkingLotName = parkingLotName;
     }
 
-    public String getCarID() {
-        return carID;
+    public String getcarId() {
+        return carId;
     }
 
-    public void setCarID(String carID) {
-        this.carID = carID;
+    public void setcarId(String carId) {
+        this.carId = carId;
     }
 
     public Date getCreateTime() {

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name="parking_lot")
 public class ParkingLot {
     @Id
     @Column(unique = true)

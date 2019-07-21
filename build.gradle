@@ -23,7 +23,7 @@ repositories {
 }
 
 flyway {
-    url = 'jdbc:h2:file:./target/foobar'
+    url = 'jdbc:h2:file:./parking-lot'
     user = 'sa'
 }
 
